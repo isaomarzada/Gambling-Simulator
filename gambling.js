@@ -9,103 +9,285 @@ var squareEight = document.getElementById('square-eight');
 var squareNine = document.getElementById('square-nine');
 var gamblingAmountText = document.getElementById('amount-left');
 var gamblingAmount = document.getElementById('gambling-amount');
-gamblingAmount.value;
+var center = document.getElementById('main-div');
+let greenCounter = 0
+let redCounter = 0;
+let clicked;
 var array = [squareOne, squareTwo, squareThree, squareFour, squareFive, squareSix, squareSeven, squareEight, squareNine];
-console.log(array[2]);
+let didLose;
+center.style.display = "none";
 
 function enterAmount(){
-  var gamblingAmountText = document.getElementById('amount-left');
-  var gamblingAmount = document.getElementById('gambling-amount');
   var formContent = document.getElementById('amount-input');
-
   formContent.innerHTML = "";
-  console.log(gamblingAmount.value);
-
   gamblingAmountText.innerHTML = gamblingAmount.value;
+  reset();
 }
 
-function bombClicked () {
-  squareOne.addEventListener("click", () => {
-    if (squareOne.value == "bomb") {
-      squareOne.style.background = "red";
-    }
-    else squareOne.style.background = "green";
-  })
-  squareTwo.addEventListener("click", () => {
-    if (squareTwo.value == "bomb") {
-      squareTwo.style.background = "red";
-    }
-    else squareTwo.style.background = "green";
-  })
-  squareThree.addEventListener("click", () => {
-    if (squareThree.value == "bomb") {
-      squareThree.style.background = "red";
-    }
-    else squareThree.style.background = "green";
-  })
-  squareFour.addEventListener("click", () => {
-    if (squareFour.value == "bomb") {
-      squareFour.style.background = "red";
-    }
-    else squareFour.style.background = "green";
-  })
-  squareFive.addEventListener("click", () => {
-    if (squareFive.value == "bomb") {
-      squareFive.style.background = "red";
-    }
-    else squareFive.style.background = "green";
-  })
-  squareSix.addEventListener("click", () => {
-    if (squareSix.value == "bomb") {
-      squareSix.style.background = "red";
-    }
-    else squareSix.style.background = "green";
-  })
-  squareSeven.addEventListener("click", () => {
-    if (squareSeven.value == "bomb") {
-      squareSeven.style.background = "red";
-    }
-    else squareSeven.style.background = "green";
-  })
-  squareEight.addEventListener("click", () => {
-    if (squareEight.value == "bomb") {
-      squareEight.style.background = "red";
-    }
-    else squareEight.style.background = "green";
-  })
-  squareNine.addEventListener("click", () => {
-    if (squareNine.value == "bomb") {
-      squareNine.style.background = "red";
-    }
-    else squareNine.style.background = "green";
-  })
+function hoverOne() {
+  squareOne.style.backgroundColor = "yellow";
 }
 
-function bombSquare() {
-  var random = Math.floor(Math.random() * 9);
-  for (let i = 0; i < 9; i++) {
-    if (i === random) {
-      array[i].value = "bomb";
+function notHoverOne() {
+  if (squareOne.value.clicked == "no") {
+  squareOne.style.backgroundColor = "#1E1E1E";
+  }
+  else {
+    if (squareOne.value.status == "bomb") {
+      squareOne.style.backgroundColor = "red";
     }
-    if (array[i].value === "bomb") {
-      console.log("square " + i + " is the bomb square.")
+    else {
+      squareOne.style.backgroundColor = "green";
     }
-    bombClicked();
   }
 }
 
-function newRound() {
-
-  bombSquare();
-
+function hoverTwo() {
+  squareTwo.style.backgroundColor = "yellow";
 }
 
-while (gamblingAmount.value > 0) {
-  newRound();
+function notHoverTwo() {
+  if (squareTwo.value.clicked == "no") {
+  squareTwo.style.backgroundColor = "#1E1E1E";
+  }
+  else {
+    if (squareTwo.value.status == "bomb") {
+      squareTwo.style.backgroundColor = "red";
+    }
+    else {
+      squareTwo.style.backgroundColor = "green";
+    }
+  }
 }
 
-newRound();
-
-if (squareOne.clicked === true) {
-  console.log("clicked");
+function hoverThree() {
+  squareThree.style.backgroundColor = "yellow";
 }
+
+function notHoverThree() {
+  if (squareThree.value.clicked == "no") {
+  squareThree.style.backgroundColor = "#1E1E1E";
+  }
+  else {
+    if (squareThree.value.status == "bomb") {
+      squareThree.style.backgroundColor = "red";
+    }
+    else {
+      squareThree.style.backgroundColor = "green";
+    }
+  }
+}
+
+function hoverFour() {
+  squareFour.style.backgroundColor = "yellow";
+}
+
+function notHoverFour() {
+  if (squareFour.value.clicked == "no") {
+  squareFour.style.backgroundColor = "#1E1E1E";
+  }
+  else {
+    if (squareFour.value.status == "bomb") {
+      squareFour.style.backgroundColor = "red";
+    }
+    else {
+      squareFour.style.backgroundColor = "green";
+    }
+  }
+}
+
+function hoverFive() {
+  squareFive.style.backgroundColor = "yellow";
+}
+
+function notHoverFive() {
+  if (squareFive.value.clicked == "no") {
+  squareFive.style.backgroundColor = "#1E1E1E";
+  }
+  else {
+    if (squareFive.value.status == "bomb") {
+      squareFive.style.backgroundColor = "red";
+    }
+    else {
+      squareFive.style.backgroundColor = "green";
+    }
+  }
+}
+
+function hoverSix() {
+  squareSix.style.backgroundColor = "yellow";
+}
+
+function notHoverSix() {
+  if (squareSix.value.clicked == "no") {
+  squareSix.style.backgroundColor = "#1E1E1E";
+  }
+  else {
+    if (squareSix.value.status == "bomb") {
+      squareSix.style.backgroundColor = "red";
+    }
+    else {
+      squareSix.style.backgroundColor = "green";
+    }
+  }
+}
+
+function hoverSeven() {
+  squareSeven.style.backgroundColor = "yellow";
+}
+
+function notHoverSeven() {
+  if (squareSeven.value.clicked == "no") {
+  squareSeven.style.backgroundColor = "#1E1E1E";
+  }
+  else {
+    if (squareSeven.value.status == "bomb") {
+      squareSeven.style.backgroundColor = "red";
+    }
+    else {
+      squareSeven.style.backgroundColor = "green";
+    }
+  }
+}
+
+function hoverEight() {
+  squareEight.style.backgroundColor = "yellow";
+}
+
+function notHoverEight() {
+  if (squareEight.value.clicked == "no") {
+  squareEight.style.backgroundColor = "#1E1E1E";
+  }
+  else {
+    if (squareEight.value.status == "bomb") {
+      squareEight.style.backgroundColor = "red";
+    }
+    else {
+      squareEight.style.backgroundColor = "green";
+    }
+  }
+}
+
+function hoverNine() {
+  squareNine.style.backgroundColor = "yellow";
+}
+
+function notHoverNine() {
+  if (squareNine.value.clicked == "no") {
+  squareNine.style.backgroundColor = "#1E1E1E";
+  }
+  else if (squareNine.value.clicked == "yes") {
+    if (squareNine.value.status == "bomb") {
+      squareNine.style.backgroundColor = "red";
+    }
+    else {
+      squareNine.style.backgroundColor = "green";
+    }
+  }
+}
+
+function reset() {
+    center.style.display = "block";
+    didLose = false;
+    gamblingAmountText.innerHTML = gamblingAmount.value;
+    for (let i = 0; i < array.length; i++) {
+      array[i].value = {
+        status: "notBomb",
+        clicked: "no"
+      };
+    }
+    let random = Math.floor(Math.random() * 9);
+    array[random].value.status = "bomb";
+    console.log("square " + random + " is the bomb square.")
+    for (let i = 0; i < array.length; i++) {
+      array[i].style.pointerEvents = "auto";
+      array[i].style.background = "#1E1E1E";
+    }
+    greenCounter = 0;
+    redCounter = 0;
+}
+
+function modifyGamblingAmount() {
+    if (didLose == true) {
+      gamblingAmount.value = parseInt(gamblingAmount.value) - 50;
+    }
+    else {
+      gamblingAmount.value = parseInt(gamblingAmount.value) + 50;
+    }
+}
+
+for (let i = 0; i < array.length; i++) {
+  array[i].addEventListener("click", () => {
+    array[i].value.clicked = "yes";
+    if (array[i].value.status == "bomb") {
+      array[i].style.background = "red";
+      redCounter++;
+      didLose = true
+      if (greenCounter >= 4 || redCounter >= 1) {
+        for (let i = 0; i < array.length; i++) {
+          array[i].style.pointerEvents = "none";
+        }
+        setTimeout(function(){
+            modifyGamblingAmount();
+            reset();
+        }, 800);
+      }
+    }
+    else{
+      array[i].style.background = "green";
+      greenCounter++;
+      didLose = false;
+      if (greenCounter >= 4 || redCounter >= 1) {
+        for (let i = 0; i < array.length; i++) {
+          array[i].style.pointerEvents = "none";
+        }
+        setTimeout(function(){
+            modifyGamblingAmount();
+            reset();
+        }, 800);
+      }
+    }
+  })
+}
+
+
+
+/* function bombClicked () {
+  for (let i = 0; i < array.length; i++) {
+    array[i].addEventListener("click", () => {
+      if (array[i].value == "bomb") {
+        array[i].style.background = "red";
+        redCounter++;
+        didLose = true
+      }
+      else{
+        array[i].style.background = "green";
+        greenCounter++;
+        didLose = false;
+      }
+    })
+  }
+  if (greenCounter < 4 && redCounter < 1) {
+    bombClicked();
+  }
+  else {
+    setTimeout(function(){
+        modifyGamblingAmount();
+        reset();
+    }, 2000);
+  }
+  /*  for (let i = 0; i < array.length; i++) {
+      array[i].style.pointerEvents = "none";
+    }
+    if (didLose == true) {
+      gamblingAmount.value = parseInt(gamblingAmount.value) - 50;
+    }
+    else {
+      gamblingAmount.value = parseInt(gamblingAmount.value) + 50;                   //problem is with the scoping. That is why score count was getting messed up.
+    }
+    gamblingAmountText.innerHTML = gamblingAmount.value;
+    setTimeout(function(){
+        newGame();
+        array[random].value = "notBomb";
+    }, 2000);
+  } */
