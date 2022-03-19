@@ -12,15 +12,21 @@
   color: black;
 }
 
+#question-mark {
+  position: relative;
+  z-index: -1;
+}
+
 .square {
     float:left;
     position: relative;
     width: 30%;
     padding-bottom : 30%; /* = width for a 1:1 aspect ratio */
     margin:1.66%;
-    background-color:#1E1E1E;
+    background-color: pink;
     overflow:hidden;
     cursor: pointer;
+    z-index: 100;
 }
 
 .square:hover {
