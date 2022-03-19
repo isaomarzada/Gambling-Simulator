@@ -10,18 +10,57 @@ var squareNine = document.getElementById('square-nine');
 var gamblingAmountText = document.getElementById('amount-left');
 var gamblingAmount = document.getElementById('gambling-amount');
 var center = document.getElementById('main-div');
-let greenCounter = 0
+const formInput = document.getElementById('amount-input');
+const errorMessage = document.getElementById('error');
+const submitButton = document.getElementById('submit-btn');
+const restartButton = document.getElementById('restart-button');
+let greenCounter = 0;
 let redCounter = 0;
 let clicked;
 var array = [squareOne, squareTwo, squareThree, squareFour, squareFive, squareSix, squareSeven, squareEight, squareNine];
 let didLose;
+var clickSound;
+var loseSound;
+var winSound;
 center.style.display = "none";
+restartButton.style.display = "none";
+
+
+submitButton.addEventListener('click', (e) => {
+  let messages = [];
+  if (gamblingAmount.value == NaN || gamblingAmount.value == "" || gamblingAmount.value <= 0) {
+    e.preventDefault();
+    messages.push("Oops, you have to enter a positive number");
+    errorMessage.innerText = messages.join(', ');
+  }
+  else {
+    errorMessage.innerText = "";
+    formInput.style.display = "none";
+    gamblingAmountText.innerHTML = gamblingAmount.value;
+    reset();
+  }
+})
+
+restartButton.addEventListener('click', () => {
+  restartButton.style.display = "none";
+  errorMessage.style.display = "none";
+  formInput.reset();
+  formInput.style.display = "block";
+})
 
 function enterAmount(){
-  var formContent = document.getElementById('amount-input');
-  formContent.innerHTML = "";
-  gamblingAmountText.innerHTML = gamblingAmount.value;
-  reset();
+  let messages = [];
+  if (gamblingAmount.value == NaN || gamblingAmount.value == "") {
+    e.preventDefault();
+    messages.push("Oops, you have to enter a number");
+    errorMessage.innerText = messages.join(', ');
+  }
+  else {
+  //  formInput.innerHTML = "";
+    gamblingAmountText.innerHTML = gamblingAmount.value;
+    errorMessage.innerText = "";
+    reset();
+  }
 }
 
 function hoverOne() {
@@ -187,6 +226,18 @@ function notHoverNine() {
 }
 
 function reset() {
+  if (gamblingAmount.value <= 0) {
+    center.style.display = "none";
+    errorMessage.innerHTML = "Uh-Oh, you're all out of money";
+    errorMessage.style.display = "block";
+    restartButton.style.display = "block";
+    gamblingAmountText.innerHTML = "";
+  }
+  else {
+    clickSound = new sound("zapsplat_multimedia_button_click_fast_plastic_49161.mp3");
+    loseSound = new sound("187502__waveplaysfx__sfx-hit-drop-bomb-effect-5.wav");
+    winSound = new sound("75235__creek23__cha-ching.wav");
+    restartButton.style.display = "none";
     center.style.display = "block";
     didLose = false;
     gamblingAmountText.innerHTML = gamblingAmount.value;
@@ -205,6 +256,22 @@ function reset() {
     }
     greenCounter = 0;
     redCounter = 0;
+  }
+}
+
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
 }
 
 function modifyGamblingAmount() {
@@ -218,9 +285,13 @@ function modifyGamblingAmount() {
 
 for (let i = 0; i < array.length; i++) {
   array[i].addEventListener("click", () => {
+    if (array[i].value.status !== "bomb") {
+      clickSound.play();
+    }
     array[i].value.clicked = "yes";
     if (array[i].value.status == "bomb") {
       array[i].style.background = "red";
+      loseSound.play();
       redCounter++;
       didLose = true
       if (greenCounter >= 4 || redCounter >= 1) {
@@ -238,6 +309,7 @@ for (let i = 0; i < array.length; i++) {
       greenCounter++;
       didLose = false;
       if (greenCounter >= 4 || redCounter >= 1) {
+        winSound.play();
         for (let i = 0; i < array.length; i++) {
           array[i].style.pointerEvents = "none";
         }
@@ -249,45 +321,3 @@ for (let i = 0; i < array.length; i++) {
     }
   })
 }
-
-
-
-/* function bombClicked () {
-  for (let i = 0; i < array.length; i++) {
-    array[i].addEventListener("click", () => {
-      if (array[i].value == "bomb") {
-        array[i].style.background = "red";
-        redCounter++;
-        didLose = true
-      }
-      else{
-        array[i].style.background = "green";
-        greenCounter++;
-        didLose = false;
-      }
-    })
-  }
-  if (greenCounter < 4 && redCounter < 1) {
-    bombClicked();
-  }
-  else {
-    setTimeout(function(){
-        modifyGamblingAmount();
-        reset();
-    }, 2000);
-  }
-  /*  for (let i = 0; i < array.length; i++) {
-      array[i].style.pointerEvents = "none";
-    }
-    if (didLose == true) {
-      gamblingAmount.value = parseInt(gamblingAmount.value) - 50;
-    }
-    else {
-      gamblingAmount.value = parseInt(gamblingAmount.value) + 50;                   //problem is with the scoping. That is why score count was getting messed up.
-    }
-    gamblingAmountText.innerHTML = gamblingAmount.value;
-    setTimeout(function(){
-        newGame();
-        array[random].value = "notBomb";
-    }, 2000);
-  } */

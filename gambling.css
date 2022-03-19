@@ -8,6 +8,10 @@
   margin-left:-350px; /*this is half of width of your div*/
 }
 
+#error {
+  color: black;
+}
+
 .square {
     float:left;
     position: relative;
