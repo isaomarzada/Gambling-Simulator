@@ -285,6 +285,9 @@ function modifyGamblingAmount() {
 
 for (let i = 0; i < array.length; i++) {
   array[i].addEventListener("click", () => {
+    if (array[i].value.clicked == "yes") {
+      return;
+    }
     if (array[i].value.status !== "bomb") {
       clickSound.play();
     }
